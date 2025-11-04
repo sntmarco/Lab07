@@ -18,10 +18,15 @@ class Controller:
         self.epoca_selezionata = None
 
     # POPOLA DROPDOWN
-    # TODO
+    def popola_dropdown(self):
+        musei = self._model.get_musei()
 
     # CALLBACKS DROPDOWN
-    # TODO
+    def handler_museo(self):
+        pass
+
+    def handler_epoca(self):
+        pass
 
     # AZIONE: MOSTRA ARTEFATTI
     # TODO
