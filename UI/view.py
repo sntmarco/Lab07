@@ -21,6 +21,10 @@ class View:
         # Controller
         self.controller = None
 
+        #Dropdown
+        self.filtro_museo = None
+        self.filtro_epoche = None
+
     def show_alert(self, messaggio):
         self.alert.show_alert(messaggio)
 
@@ -37,20 +41,24 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         self.filtro_museo = ft.Dropdown(label="Museo",
-                                        width = 200,
+                                        width = 400,
                                         hint_text = "Seleziona museo",
+                                        options = None,
                                         on_change = self.controller.handler_museo)
 
         self.filtro_epoche = ft.Dropdown(label="Epoche",
                                         width=200,
                                         hint_text="Seleziona epoca",
+                                        options=None,
                                         on_change=self.controller.handler_epoca)
 
         # Sezione 3: Artefatti
         self.btn_mostra = ft.ElevatedButton(text = "Mostra artefatti",
                                             width = 200,
-                                            tooltip = "Businesses with stars higher than chosen one",
-                                            on_click = self.controller.handler_museo)
+                                            tooltip = "Mostra artefatti",
+                                            on_click = self.controller.handler_mostra)
+
+        self.lista_risultato = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -72,6 +80,8 @@ class View:
             # Sezione 3: Artefatti
             self.btn_mostra,
             ft.Divider(),
+            self.lista_risultato,
+            ft.Divider(),
         )
 
         self.page.scroll = "adaptive"
@@ -82,3 +92,13 @@ class View:
         self.page.theme_mode = ft.ThemeMode.DARK if self.toggle_cambia_tema.value else ft.ThemeMode.LIGHT
         self.toggle_cambia_tema.label = "Tema scuro" if self.toggle_cambia_tema.value else "Tema chiaro"
         self.page.update()
+
+    def popola_dropdown_musei(self, musei):
+        self.filtro_museo.options = [ft.DropdownOption("None", "Nessuna selezione")]+[ft.DropdownOption(m) for m in musei]
+        self.page.update()
+        return
+
+    def popola_dropdown_epoche(self, epoche):
+        self.filtro_epoche.options = [ft.DropdownOption("None", "Nessuna selezione")]+[ft.DropdownOption(e) for e in epoche]
+        self.page.update()
+        return

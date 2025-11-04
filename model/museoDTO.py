@@ -11,7 +11,7 @@ class Museo:
     tipologia: str
 
     def __eq__(self, other):
-        return isinstance(other, Museo) and self.id == other.id
+        return isinstance(other, Museo) and self.nome == other.nome
 
     def __str__(self):
         return f"{self.id} | {self.nome} | Tipologia: {self.tipologia}"
